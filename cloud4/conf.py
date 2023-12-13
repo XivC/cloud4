@@ -8,6 +8,3 @@ CELERY_TASKS_DEFAULT_QUEUE = 'cloud4_celery'
 
 if not POSTGRES_URL:
     raise ImproperlyConfigured('You must specify POSTGRES_URL env variable')
-
-if not CELERY_BROKER_URL:
-    raise ImproperlyConfigured('You must specify CELERY_BROKER_URL env variable')

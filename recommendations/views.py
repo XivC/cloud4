@@ -24,8 +24,10 @@ class RecommendationsViewSet(
         return self.request.user
 
     def get_queryset(self) -> QuerySet[Book]:
-        last_revision = Recommendation.objects.filter(user=self.user).order_by('-revision').first()
-        if not last_revision:
+        last_recommendation = Recommendation.objects.filter(user=self.user).order_by('-revision').first()
+        if not last_recommendation:
             return Book.objects.none()
+
+        last_revision = last_recommendation.revision
 
         return Book.objects.for_viewset().filter(id__in=Recommendation.objects.filter(user=self.user, revision=last_revision).values_list('book_id', flat=True))
